@@ -1,10 +1,18 @@
-var http = require('http');
-var url = require('url');
-var fs = require('fs');
-var port = 80;
-var hostname = "0.0.0.0";
+const http = require('https');
+const url = require('url');
+const fs = require('fs');
+const port = 443;
+const hostname = "0.0.0.0";
 
-var server = http.createServer(function (req, res) {
+const httpsOptions = {
+    cert: fs.readFileSync('/home/fae/Documents/CA_Cert/certificate.crt'),
+    ca: fs.readFileSync('/home/fae/Documents/CA_Cert/ca_bundle.crt'),
+    key: fs.readFileSync('/home/fae/Documents/CA_Cert/private.key')
+
+};
+
+
+const server = https.createServer(function (req, res) {
     console.log(`Received request from ${req.connection.remoteAddress}: ${req.method} ${req.url}`);
     
     var q = url.parse(req.url, true);
